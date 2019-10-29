@@ -29,7 +29,7 @@ def q_learning(grid,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
             if(finished):break
             state = next_state
         print("hi",episode_len)
-        # grid.gui.mainloop()
+        grid.gui.mainloop()
         grid.reset()
 
     return Q
