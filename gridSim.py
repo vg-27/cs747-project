@@ -16,7 +16,7 @@ class gridSim:
 		self.finish = [n-1,n-1]
 		self.finished=False	
 	def reset(self):
-		self.gui = App(self.n,self.n)
+		# self.gui = App(self.n,self.n)
 		self.finished = False
 	def take_action(self,i,j,action):
 		# action = 0 - Up, 1 - Down, 2 - Right, 3 - Left
