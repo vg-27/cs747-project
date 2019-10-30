@@ -39,16 +39,16 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
     # grid.gui.mainloop()
     return Q
 
-n=5
-grid = gridSim(n,0.2)
-Q=q_learning(grid,0.01,0.3,1000,n*n,4)
-action_map = {0:"Up",1:"down",2:"right",3:"left"}
-action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
-gui=App(n,n)
-for i in range(len(Q)):
-    s=action_map2[np.argmax(Q[i])]
-    s2 = action_map[np.argmax(Q[i])]
-    print(s2)
-    gui.update(i//n,i%n,s[0])
-gui.mainloop()
+# n=5
+# grid = gridSim(n,0.2)
+# Q=q_learning(grid,0.01,0.3,1000,n*n,4)
+# action_map = {0:"Up",1:"down",2:"right",3:"left"}
+# action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
+# gui=App(n,n)
+# for i in range(len(Q)):
+#     s=action_map2[np.argmax(Q[i])]
+#     s2 = action_map[np.argmax(Q[i])]
+#     print(s2)
+#     gui.update(i//n,i%n,s[0])
+# gui.mainloop()
 
