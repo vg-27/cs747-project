@@ -32,13 +32,11 @@ def q_learning(grid,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
         print("hi",episode_len)
         grid.reset()
     # grid.gui.mainloop()
-
-
     return Q
 
 n=5
 grid = gridSim(n,0.2)
-Q=q_learning(grid,0.01,0.3,100,n*n,4)
+Q=q_learning(grid,0.01,0.3,1000,n*n,4)
 action_map = {0:"Up",1:"down",2:"right",3:"left"}
 action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
 gui=App(n,n)
