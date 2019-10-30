@@ -1,5 +1,6 @@
 from gridSim import *
 from gui import * 
+from player import *
 import numpy as np 
 def EpsilonGreedyPolicy(Q,state,epsilon=0.1):
     n_actions = len(Q[0])
@@ -8,29 +9,33 @@ def EpsilonGreedyPolicy(Q,state,epsilon=0.1):
     p_a[greedyAction]+=(1-epsilon)
     return p_a
 
-def q_learning(grid,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
+def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
     Q = [[0]*n_actions for i in range(n_states)]
-    n= np.sqrt(n_states)
+    # n= np.sqrt(n_states)
     for epi in range(num_episodes):
-        [x,y]=grid.init_pos
-        state = int(x*n + y)
+        # [x,y]=grid.init_pos
+        # state = int(x*n + y)
+        state = player.initState
         episode_len = 0
-        grid.gui.update(x,y,episode_len)
-
+        # grid.gui.update(x,y,episode_len)
+        # print(epi)
         while(1):
             episode_len+=1
+            # print("State",state)
             action_probs = EpsilonGreedyPolicy(Q,state,epsilon)
             action = np.random.choice(np.arange(n_actions),p = action_probs)
-            [x,y,reward,finished]=grid.take_action(x,y,action)
-            if(epi==num_episodes-1):
-                grid.gui.update(x,y,episode_len)
-            next_state = int(x*n + y)
+            # print("Action",action)
+            [next_state,reward,finished]=player.transition(state,action)
+            # [x,y,reward,finished]=grid.take_action(x,y,action)
+            # if(epi==num_episodes-1):
+                # grid.gui.update(x,y,episode_len)
+            # next_state = int(x*n + y)
             next_best_action = np.argmax(Q[next_state])
             Q[state][action] = Q[state][action] + alpha*(reward + gamma*Q[next_state][next_best_action]-Q[state][action])
             if(finished):break
             state = next_state
-        print("hi",episode_len)
-        grid.reset()
+        print("length of episode",episode_len)
+        player.reset()
     # grid.gui.mainloop()
     return Q
 
@@ -46,3 +51,4 @@ for i in range(len(Q)):
     print(s2)
     gui.update(i//n,i%n,s[0])
 gui.mainloop()
+
