@@ -1,6 +1,6 @@
 from gridSim import *
-from gui import * 
-import numpy as np 
+from gui import *
+import numpy as np
 from q_learning import *
 
 

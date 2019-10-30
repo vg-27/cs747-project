@@ -29,8 +29,8 @@ class player:
 		return self.phi(x,y) - self.phi(x1,y1)
 
 	def phi(self,x,y):
-		return 3
-		# return math.sqrt((x-self.grid.finish[0])^2 + (y-self.grid.finish[1])^2)
+		# return 3
+		return math.sqrt((x-self.grid.finish[0])**2 + (y-self.grid.finish[1])**2)
 
 	def reset(self):
 		self.grid.reset()
