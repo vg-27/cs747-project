@@ -1,5 +1,5 @@
 from gridSim import *
-from gui import * 
+from gui import *
 from player import *
 import numpy as np 
 def EpsilonGreedyPolicy(Q,state,epsilon=0.1):
@@ -25,7 +25,7 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1):
             action_probs = EpsilonGreedyPolicy(Q,state,epsilon)
             action = np.random.choice(np.arange(n_actions),p = action_probs)
             # print("Action",action)
-            [next_state,reward,finished]=player.transition(state,action)
+            [next_state,reward,finished]=player.transition_with_reward_shaping(state,action)
             # [x,y,reward,finished]=grid.take_action(x,y,action)
             # if(epi==num_episodes-1):
                 # grid.gui.update(x,y,episode_len)
