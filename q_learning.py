@@ -11,6 +11,7 @@ def EpsilonGreedyPolicy(Q,state,epsilon=0.1):
 
 def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1,shaping=False):
 	Q = [[0]*n_actions for i in range(n_states)]
+	stepsPerEpisode=[]
 	for epi in range(num_episodes):
 		state = player.initState
 		episode_len = 0
@@ -24,8 +25,9 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1,shap
 			Q[state][action] = Q[state][action] + alpha*(reward + gamma*Q[next_state][next_best_action]-Q[state][action])
 			if(finished):break
 			state = next_state
-		print("length of episode",episode_len)
+		stepsPerEpisode.append(episode_len)
+		# print("length of episode",episode_len)
 		if(epi<=num_episodes-2):player.reset()
-	return Q
+	return Q,stepsPerEpisode
 
 

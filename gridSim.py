@@ -3,7 +3,7 @@ from gui import *
 class gridSim:
 	"""docstring for gridSim"""
 	
-	def __init__(self, n, p):
+	def __init__(self, n, p,name="hi"):
 		# super(gridSim, self).__init__()
 		# n x n grid
 		# with probability p move in random direction
@@ -12,7 +12,7 @@ class gridSim:
 		self.init_pos = [0,0]
 		self.grid = [[0]*n for i in range(0,n)]
 		self.allowed = [[True]*n for i in range(0,n)]
-		self.gui = App(n,n)
+		self.gui = App(n,n,name)
 		self.finish = [n-1,n-1]
 		self.finished=False	
 	def reset(self):

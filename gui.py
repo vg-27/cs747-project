@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 
 class App(tk.Tk):
-    def __init__(self,columns,rows, *args, **kwargs):
+    def __init__(self,columns,rows,name, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.canvas = tk.Canvas(self, width=columns*25, height=rows*25, borderwidth=0, highlightthickness=0)
         self.canvas.pack(side="top", fill="both", expand="true")
@@ -10,7 +10,7 @@ class App(tk.Tk):
         self.columns = columns
         self.cellwidth = 25
         self.cellheight = 25
-
+        self.winfo_toplevel().title(name)
         self.rect = {}
         self.oval = {}
         for column in range(self.columns):
