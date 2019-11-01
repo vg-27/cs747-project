@@ -2,8 +2,8 @@ import random
 from gui import *
 class gridSim:
 	"""docstring for gridSim"""
-	
-	def __init__(self, n, p,name="hi"):
+
+	def __init__(self, n, p, flag_pos, name="hi"):
 		# super(gridSim, self).__init__()
 		# n x n grid
 		# with probability p move in random direction
@@ -13,10 +13,12 @@ class gridSim:
 		self.grid = [[0]*n for i in range(0,n)]
 		self.allowed = [[True]*n for i in range(0,n)]
 		self.gui = App(n,n,name)
-		self.finish = [n-1,n-1]
-		self.finished=False	
+		self.flag_pos = flag_pos
+		self.collected = 0
+		self.finished=False
 	def reset(self):
 		# self.gui = App(self.n,self.n)
+		self.collected = 0
 		self.finished = False
 	def take_action(self,i,j,action):
 		# action = 0 - Up, 1 - Down, 2 - Right, 3 - Left
@@ -55,14 +57,17 @@ class gridSim:
 			else:
 				j1 = j
 
-		if(i1==self.finish[0] and j1==self.finish[1]):
+		if(i1==self.flag_pos[self.collected][0] and j1==self.flag_pos[self.collected][1]):
+			self.collected += 1
+
+		if(self.collected==len(self.flag_pos)):
 			self.finished=True
 			# reward=self.n*self.n
 
 		if(self.allowed[i1],[j1]):
-			return [i1,j1,reward,self.finished] 
+			return [i1,j1,self.collected,reward,self.finished]
 		else:
-			return [i,j,reward,self.finished]
+			return [i,j,self.collected,reward,self.finished]
 
 # if __name__ == "__main__":
 #     grid=gridSim(10,0.5)
