@@ -57,7 +57,7 @@ class gridSim:
 
 		if(i1==self.finish[0] and j1==self.finish[1]):
 			self.finished=True
-			reward=self.n*self.n
+			# reward=self.n*self.n
 
 		if(self.allowed[i1],[j1]):
 			return [i1,j1,reward,self.finished] 

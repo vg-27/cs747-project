@@ -31,6 +31,7 @@ class player:
 
 	def phi(self,x,y):
 		# return 3
+		# return abs((x-self.grid.finish[0])) + abs((y-self.grid.finish[1]))
 		return math.sqrt((x-self.grid.finish[0])**2 + (y-self.grid.finish[1])**2)
 
 	def reset(self):

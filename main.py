@@ -30,16 +30,16 @@ gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
 grid.__init__(n,p,"Optimal Action With Shaping")
 pl.__init__(grid)
 
-Q_shaping,stepsPerEpisode_shaping=q_learning(pl,0.01,0,1000,n*n,4,shaping=True)
+Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,n*n,num_actions,shaping=True)
 gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
 gui.mainloop()
 
-plt.plot(range(num_episode),stepsPerEpisode)
+plt.scatter(range(num_episode),stepsPerEpisode)
 plt.title("Steps/Episode Without Shaping")
 plt.show()
 
-plt.plot(range(num_episode),stepsPerEpisode_shaping)
+plt.scatter(range(num_episode),stepsPerEpisode_shaping)
 plt.title("Steps/Episode With Shaping")
 plt.show()
 
