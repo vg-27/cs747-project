@@ -14,25 +14,30 @@ def show_Q_path(n,Q,action_map2,pl,name):
 	return gui0
 n=5
 p=0
-eps = 0
+eps = 1
 num_actions = 4
 num_episode = 1000
-lr = 0.01
-flag_pos = [[4,4]]
+lr = 0.1
+flag_pos = [[4,4],[0,0],[0,4],[4,0]]
+# flag_pos = [[0,4],[2,2]]
+
+num_states = n*n*len(flag_pos)
 
 action_map = {0:"Up",1:"down",2:"right",3:"left"}
 action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
 
 grid = gridSim(n,p,flag_pos,"Optimal Action Without Shaping")
-pl = player(grid)
 
-Q,stepsPerEpisode=q_learning(pl,lr,eps,num_episode,n*n*len(flag_pos),num_actions,shaping=False)
+pl = player(grid)
+Q,stepsPerEpisode=q_learning(pl,lr,eps,num_episode,num_states,num_actions,shaping=False)
+print(estimate_V(Q,num_states,num_actions))
 gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
 
 grid.__init__(n,p,flag_pos,"Optimal Action With Shaping")
 pl.__init__(grid)
 
-Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,n*n*len(flag_pos),num_actions,shaping=True)
+Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,num_states,num_actions,shaping=True)
+print(estimate_V(Q_shaping,num_states,num_actions))
 gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
 gui.mainloop()

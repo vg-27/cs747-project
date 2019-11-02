@@ -40,7 +40,7 @@ class player:
 	def phi(self,x,y,collected):
 		# return 3
 		target = self.grid.flag_pos[collected]
-		return abs(x-target[0]) + abs(y-target[1])
+		return (abs(x-target[0]) + abs(y-target[1]))
 		# return math.sqrt((x-target[0])**2 + (y-target[1])**2)
 
 	def reset(self):
