@@ -16,8 +16,8 @@ n=5
 p=0
 eps = 0
 num_actions = 4
-num_episode = 1000
-lr = 0.01
+num_episode = 100
+lr = 0.5
 action_map = {0:"Up",1:"down",2:"right",3:"left"}
 action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
 
@@ -35,11 +35,18 @@ gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
 gui.mainloop()
 
-plt.scatter(range(num_episode),stepsPerEpisode)
-plt.title("Steps/Episode Without Shaping")
-plt.show()
+# plt.scatter(range(num_episode),stepsPerEpisode)
+plt.plot(range(num_episode),stepsPerEpisode,label='Without Shaping')
+plt.xlabel("Episodes")
+plt.ylabel("Steps Taken")
 
-plt.scatter(range(num_episode),stepsPerEpisode_shaping)
-plt.title("Steps/Episode With Shaping")
+# plt.title("Steps/Episode Without Shaping")
+# plt.show()
+
+# plt.scatter(range(num_episode),stepsPerEpisode_shaping)
+plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
+plt.title("Graph of Simple Grid")
+plt.legend()
+plt.savefig('simple_grid.png')
 plt.show()
 
