@@ -64,8 +64,8 @@ class gridSim:
 			self.finished=True
 			# reward=self.n*self.n
 
-		if(self.allowed[i1],[j1]):
-			return [i1,j1,self.collected,reward,self.finished]
+		if(self.allowed[i1][j1]):
+			return [i1,j1,reward,self.finished] 
 		else:
 			return [i,j,self.collected,reward,self.finished]
 
