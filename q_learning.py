@@ -25,7 +25,7 @@ def estimate_V(Q,n_states,n_actions):
         v.append(Q[s][best_action])
     return v
 
-def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1,eps_decay=1.001,shaping=False):
+def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,shaping,gamma=1,eps_decay=1.001 ):
     Q = [[0]*n_actions for i in range(n_states)]
     stepsPerEpisode=[]
     print("started q_learning")
@@ -33,16 +33,23 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,gamma=1,eps_
         state = player.initState
         episode_len = 0
         # if(epi%100 == 0):
-        # if shaping:
-        #     v = estimate_V(Q,n_states,n_actions)
+        # if shaping==2:
+            # v = estimate_V(Q,n_states,n_actions)
         while(1):
             episode_len+=1
             action = EpsilonGreedyPolicy(Q,state,epsilon)
             # action = np.random.choice(np.arange(n_actions),p = action_probs)
-            if shaping:
+            if shaping == 1:
                 # [next_state,reward,finished]=player.transition(state,action)
                 # reward += v[next_state]-v[state]
-                [next_state,reward,finished]=player.transition_with_reward_shaping(state,action)
+                [next_state,reward,finished]=player.transition_with_reward_shaping(state,action,1)
+            elif shaping==2:
+                [next_state,reward,finished]=player.transition_with_reward_shaping(state,action,2)
+            elif shaping == 3:
+                v = estimate_V(Q,n_states,n_actions)
+                [next_state,reward,finished]=player.transition(state,action)
+                reward += v[next_state]-v[state]
+
             else:
                 [next_state,reward,finished]=player.transition(state,action)
             next_best_action = np.argmax(Q[next_state])
