@@ -16,7 +16,7 @@ n=5
 p=0
 eps = 1
 num_actions = 4
-num_episode = 500
+num_episode = 250
 lr = 0.5
 flag_pos = [[4,4],[0,0],[0,4],[4,0]]
 # flag_pos = [[0,4],[2,2]]
@@ -55,5 +55,5 @@ plt.ylabel("Steps Taken")
 plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
 plt.title("Graph of Flag Grid")
 plt.legend()
-plt.savefig('simple_grid.png')
+plt.savefig('flag_grid.png')
 plt.show()
