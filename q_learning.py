@@ -33,8 +33,8 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,shaping,gamm
         state = player.initState
         episode_len = 0
         # if(epi%100 == 0):
-        # if shaping==2:
-            # v = estimate_V(Q,n_states,n_actions)
+        if shaping == 3:
+            v = estimate_V(Q,n_states,n_actions)
         while(1):
             episode_len+=1
             action = EpsilonGreedyPolicy(Q,state,epsilon)
@@ -46,7 +46,7 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,shaping,gamm
             elif shaping==2:
                 [next_state,reward,finished]=player.transition_with_reward_shaping(state,action,2)
             elif shaping == 3:
-                v = estimate_V(Q,n_states,n_actions)
+                # v = estimate_V(Q,n_states,n_actions)
                 [next_state,reward,finished]=player.transition(state,action)
                 reward += v[next_state]-v[state]
 

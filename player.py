@@ -48,7 +48,7 @@ class player:
 	def phi2(self,x,y,collected):
 		total_flags = len(self.grid.flag_pos)
 		target = self.grid.flag_pos[total_flags-1]
-		return (abs(x-target[0]) + abs(y-target[1]))*(total_flags - collected)/total_flags
+		return (total_flags - collected)/total_flags
 	def reset(self):
 		self.states=[[0,0]]
 		self.grid.reset()

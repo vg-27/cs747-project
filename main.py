@@ -12,14 +12,15 @@ def show_Q_path(n,Q,action_map2,pl,name):
 	for j in range(len(pl.states)):
 		pl.grid.gui.update(pl.states[j][0],pl.states[j][1],j)
 	return gui0
-n=5
+n=10
 p=0
-eps = 1
+eps = 0.1
 num_actions = 4
-num_episode = 250
+num_episode = 500
 lr = 0.5
-flag_pos = [[1,4],[2,0],[3,4],[4,0]]
+# flag_pos = [[1,4],[2,0],[3,4],[4,0]]
 # flag_pos = [[0,4],[2,2]]
+flag_pos = [[0,9],[8,0],[5,4],[3,9],[6,0],[9,9]]
 
 num_states = n*n*len(flag_pos)
 
