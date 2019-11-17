@@ -53,3 +53,28 @@ class player:
 	def reset(self):
 		self.states=[[0,0]]
 		self.grid.reset()
+
+class htpl:
+	"""docstring for htpl"""
+	def __init__(self,grid):
+		self.grid = grid
+		self.initState = 0
+		self.states=[[0,0]]
+	def transition(self,state,action):
+		n = self.grid.n
+		# collected = int(state/(n*n))
+		t = int(state/(n*n));
+		temp = state%(n*n);
+
+		x = int((temp)/n)
+		y = temp%n
+		[x1,y1,t1,reward,finished]=self.grid.take_action(x,y,t,action)
+		self.states.append([x1,y1])
+		next_state=int(t1*n*n + x1*n + y1)
+		# if finished:
+		# 	next_state-=n*n
+		return next_state,reward,finished
+
+	def reset(self):
+		self.states=[[0,0]]
+		self.grid.reset()

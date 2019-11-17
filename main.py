@@ -13,29 +13,33 @@ def show_Q_path(n,Q,action_map2,pl,name):
 		pl.grid.gui.update(pl.states[j][0],pl.states[j][1],j)
 	return gui0
 n=10
-p=0
+p=0.1
 eps = 1
 num_actions = 4
 num_episode = 150
 lr = 0.5
+
+#######Flag positions############
 # flag_pos = [[1,4],[2,0],[3,4],[4,0]]
 # flag_pos = [[0,4],[2,2]]
-flag_pos = [[6,1]]
+# flag_pos = [[6,1]]
 # flag_pos = [[0,9],[8,0],[5,4],[3,9],[6,0],[9,9]]
 
 allowed = [[True]*n for i in range(0,n)]
 # allowed[0][1] = False
-allowed[1][0:8] = [False]*8
-allowed[3][1:10] = [False]*9
-allowed[5][0:5] = [False]*5
-allowed[5][6:10] = [False]*4
-allowed[7][2:8] = [False]*6
-allowed[6][2] = False
+# allowed[1][0:8] = [False]*8
+# allowed[3][1:10] = [False]*9
+# allowed[5][0:5] = [False]*5
+# allowed[5][6:10] = [False]*4
+# allowed[7][2:8] = [False]*6
+# allowed[6][2] = False
 
+##water and food positions###
+fpos = [9,9]
+wpos = [0,9]
 
-
-
-num_states = n*n*len(flag_pos)
+# num_states = n*n*len(flag_pos)
+num_states = n*n*2
 
 
 action_map = {0:"Up",1:"down",2:"right",3:"left"}
@@ -43,9 +47,13 @@ action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
 
 #############################################################################################
 
-grid = gridSim(n,p,flag_pos,allowed,"Optimal Action Withounum_actionst Shaping")
+# grid = gridSim(n,p,flag_pos,allowed,"Optimal Action Withounum_actionst Shaping")
 
-pl = player(grid)
+# pl = player(grid)
+grid = htgrid(n,p,allowed,fpos,wpos,"Optimal Action Without Shaping")
+
+pl = htpl(grid)
+
 Q,stepsPerEpisode=q_learning(pl,lr,eps,num_episode,num_states,num_actions,0)
 print(estimate_V(Q,num_states,num_actions))
 gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
@@ -54,14 +62,14 @@ plt.plot(range(num_episode),stepsPerEpisode,label='Without Shaping')
 
 #############################################################################################
 
-grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping")
-pl.__init__(grid)
+# grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping")
+# pl.__init__(grid)
 
-Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
-print(estimate_V(Q_shaping,num_states,num_actions))
-gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
+# Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
+# print(estimate_V(Q_shaping,num_states,num_actions))
+# gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
-plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
+# plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
 #############################################################################################
 
 # grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping 2")
@@ -75,14 +83,16 @@ plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
 
 # ##############################################################################################
 
-grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping 3")
-pl.__init__(grid)
+# grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Approx V* potential")
+# grid.__init__(n,p,allowed,fpos,wpos,"Optimal Action With Approx V* potential")
 
-Q_shaping,stepsPerEpisode_shaping_2=q_learning(pl,lr,eps,num_episode,num_states,num_actions,3)
-print(estimate_V(Q_shaping,num_states,num_actions))
-gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping 3")
+# pl.__init__(grid)
 
-plt.plot(range(num_episode),stepsPerEpisode_shaping_2,label='With Shaping 3')
+# Q_shaping,stepsPerEpisode_shaping_2=q_learning(pl,lr,eps,num_episode,num_states,num_actions,3)
+# print(estimate_V(Q_shaping,num_states,num_actions))
+# gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with Approx V* potential")
+
+# plt.plot(range(num_episode),stepsPerEpisode_shaping_2,label='With Approx V* potential')
 
 ##############################################################################################
 
@@ -95,9 +105,9 @@ plt.plot(range(num_episode),stepsPerEpisode_shaping_2,label='With Shaping 3')
 # plt.show()
 
 # plt.scatter(range(num_episode),stepsPerEpisode_shaping)
-plt.title("Graph of Flag Grid")
+plt.title("Graph of Hungry-Thirsty")
 plt.xlabel("Episodes")
 plt.ylabel("Steps Taken")
 plt.legend()
-plt.savefig('wall_grid_013.png')
+plt.savefig('htp_0.png')
 plt.show()
