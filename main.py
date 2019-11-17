@@ -16,7 +16,7 @@ n=10
 p=0.1
 eps = 1
 num_actions = 4
-num_episode = 150
+num_episode = 200
 lr = 0.5
 
 #######Flag positions############
@@ -53,23 +53,33 @@ action_map2 = {0:"\u2191",1:"\u2193",2:"\u2192",3:"\u2190"}
 grid = htgrid(n,p,allowed,fpos,wpos,"Optimal Action Without Shaping")
 
 pl = htpl(grid)
-
-Q,stepsPerEpisode=q_learning(pl,lr,eps,num_episode,num_states,num_actions,0)
+res = np.zeros(num_episode)
+for x in range(0,10):
+	Q,stepsPerEpisode = q_learning(pl,lr,eps,num_episode,num_states,num_actions,0)
+	res = res + np.array(stepsPerEpisode)
+res = res/10
 print(estimate_V(Q,num_states,num_actions))
 gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
 
-plt.plot(range(num_episode),stepsPerEpisode,label='Without Shaping')
+# plt.plot(range(num_episode),res,label='Without Shaping')
+plt.plot(range(num_episode),np.cumsum(res),label='Without Shaping')
 
 #############################################################################################
 
 # grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping")
-# pl.__init__(grid)
-
+grid.__init__(n,p,allowed,fpos,wpos,"Optimal Action With Shaping")
+pl.__init__(grid)
+res = np.zeros(num_episode)
+for x in range(0,10):
+	Q_shaping,stepsPerEpisode_shaping = q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
+	res = res + np.array(stepsPerEpisode_shaping)
+res = res/10
 # Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
-# print(estimate_V(Q_shaping,num_states,num_actions))
-# gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
+print(estimate_V(Q_shaping,num_states,num_actions))
+gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
-# plt.plot(range(num_episode),stepsPerEpisode_shaping,label='With Shaping')
+# plt.plot(range(num_episode),res,label='With Shaping')
+plt.plot(range(num_episode),np.cumsum(res),label='With Shaping')
 #############################################################################################
 
 # grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping 2")
@@ -109,5 +119,5 @@ plt.title("Graph of Hungry-Thirsty")
 plt.xlabel("Episodes")
 plt.ylabel("Steps Taken")
 plt.legend()
-plt.savefig('htp_0.png')
+plt.savefig('htp_01_avg.png')
 plt.show()
