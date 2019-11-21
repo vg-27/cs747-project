@@ -1,0 +1,21 @@
+Options
+-------
+-inp Input Problem
+-ne Number of episodes
+-nit Number of Iterations
+-tp Type of problem ('flag' or 'ht')
+
+File Input Format
+------------------
+n  = length of grid
+p  = probability const.
+n x n array of 1 and 0 (1 means allowed)
+
+depending upon problem
+--For Flags Problem---
+f  = number of flags
+next 'f' lines [row,column] coordinates
+
+-- For Hungry-Thirsty Problem----
+Coordinates of food
+Coordinates of water
