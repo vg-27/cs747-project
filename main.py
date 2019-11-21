@@ -12,11 +12,13 @@ def show_Q_path(n,Q,action_map2,pl,name):
 	for j in range(len(pl.states)):
 		pl.grid.gui.update(pl.states[j][0],pl.states[j][1],j)
 	return gui0
+
+nit = 1
 n=10
 p=0.1
 eps = 1
 num_actions = 4
-num_episode = 200
+num_episode = 1000
 lr = 0.5
 
 #######Flag positions############
@@ -54,32 +56,32 @@ grid = htgrid(n,p,allowed,fpos,wpos,"Optimal Action Without Shaping")
 
 pl = htpl(grid)
 res = np.zeros(num_episode)
-for x in range(0,10):
+for x in range(0,nit):
 	Q,stepsPerEpisode = q_learning(pl,lr,eps,num_episode,num_states,num_actions,0)
 	res = res + np.array(stepsPerEpisode)
-res = res/10
+res = res/nit
 print(estimate_V(Q,num_states,num_actions))
 gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
 
 # plt.plot(range(num_episode),res,label='Without Shaping')
-plt.plot(range(num_episode),np.cumsum(res),label='Without Shaping')
+# plt.plot(range(num_episode),np.cumsum(res),label='Without Shaping')
 
 #############################################################################################
 
 # grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping")
 grid.__init__(n,p,allowed,fpos,wpos,"Optimal Action With Shaping")
 pl.__init__(grid)
-res = np.zeros(num_episode)
-for x in range(0,10):
+res1 = np.zeros(num_episode)
+for x in range(0,nit):
 	Q_shaping,stepsPerEpisode_shaping = q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
-	res = res + np.array(stepsPerEpisode_shaping)
-res = res/10
+	res1 = res1 + np.array(stepsPerEpisode_shaping)
+res1 = res1/nit
 # Q_shaping,stepsPerEpisode_shaping=q_learning(pl,lr,eps,num_episode,num_states,num_actions,1)
 print(estimate_V(Q_shaping,num_states,num_actions))
 gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping")
 
-# plt.plot(range(num_episode),res,label='With Shaping')
-plt.plot(range(num_episode),np.cumsum(res),label='With Shaping')
+# plt.plot(range(num_episode),res1,label='With Shaping')
+# plt.plot(range(num_episode),np.cumsum(res1),label='With Shaping')
 #############################################################################################
 
 # grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Shaping 2")
@@ -115,9 +117,24 @@ plt.plot(range(num_episode),np.cumsum(res),label='With Shaping')
 # plt.show()
 
 # plt.scatter(range(num_episode),stepsPerEpisode_shaping)
+plt.plot(range(num_episode),res,label='Without Shaping')
+
+plt.plot(range(num_episode),res1,label='With Shaping')
+
+
 plt.title("Graph of Hungry-Thirsty")
 plt.xlabel("Episodes")
 plt.ylabel("Steps Taken")
 plt.legend()
 plt.savefig('htp_01_avg.png')
+plt.show()
+
+plt.plot(range(num_episode),np.cumsum(res),label='Without Shaping')
+plt.plot(range(num_episode),np.cumsum(res1),label='With Shaping')
+
+plt.title("Graph of Hungry-Thirsty")
+plt.xlabel("Episodes")
+plt.ylabel("Total Steps Taken")
+plt.legend()
+plt.savefig('htp_total_avg.png')
 plt.show()

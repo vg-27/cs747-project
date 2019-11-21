@@ -101,21 +101,24 @@ class htpl:
 		disf =  abs(self.grid.fpos[0] - x) + abs(self.grid.fpos[1] - y)
 		p = self.grid.p
 		v0 = (1-p)**distf
-		ezero = 2*(1-v0)/(p*v0) - distf
-		v1 = (1-p)**disf
-		egen = 2*(1-v1)/p - (v1)*disf + (ezero + dist)*(1-v1)
+		if(p> 0):
+			ezero = 2*(1-v0)/(p*v0) - distf
+			v1 = (1-p)**disf
+			egen = 2*(1-v1)/p - (v1)*disf + (ezero + dist)*(1-v1)
 		if t == 0:
 			# return dist + distf
 			if p == 0:
 				return dist + distf
 			else:
+				# print("Phi",dist + ezero)
 				return dist + ezero
 		elif t==1:
-	 		# return disf
-	 		if p == 0:
-	 			return disf
-	 		else:
-	 			return egen
+			# return disf
+			if p == 0:
+				return disf
+			else:
+				# print("Phi",egen)
+				return egen
 	 	 	 
 
 	def reset(self):
