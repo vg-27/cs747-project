@@ -71,7 +71,7 @@ for x in range(0,rs):
 	res = res + np.array(stepsPerEpisode)
 
 res = res/rs
-gui=show_Q_path(n,Q,action_map2,pl,"path without shaping")
+gui=show_Q_path(n,Q,action_map2,pl,"path with Type0")
 
 # plt.plot(range(num_episode),res,label='Without Shaping')
 # plt.plot(range(num_episode),np.cumsum(res),label='Without Shaping')
@@ -111,7 +111,7 @@ if problem=="flag": #flags collected till now
 		res2 = res2 + np.array(stepsPerEpisode_shaping_2)
 
 	res2 = res2/rs
-	gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with shaping 2")
+	gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with Type2")
 
 # plt.plot(range(num_episode),stepsPerEpisode_shaping_2,label='With Shaping 2')
 
@@ -120,28 +120,26 @@ print("Type3")
 if problem=="flag":	#manhattan distance from flags
 	grid.__init__(n,p,flag_pos,allowed,"Optimal Action With Approx V* potential")
 
-if problem=="ht": #expected steps from food
-	grid.__init__(n,p,allowed,fpos,wpos,"Optimal Action With Approx V* potential")
-pl.__init__(grid)
+	pl.__init__(grid)
 
-res3 = np.zeros(num_episode)
+	res3 = np.zeros(num_episode)
 
-for x in range(0,rs):
-	np.random.seed(x)
-	Q_shaping,stepsPerEpisode_shaping = q_learning(pl,lr,eps,num_episode,num_states,num_actions,3)
-	res3 = res3 + np.array(stepsPerEpisode_shaping)
+	for x in range(0,rs):
+		np.random.seed(x)
+		Q_shaping,stepsPerEpisode_shaping = q_learning(pl,lr,eps,num_episode,num_states,num_actions,3)
+		res3 = res3 + np.array(stepsPerEpisode_shaping)
 
-res3 = res3/rs
-gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with Type1")
+	res3 = res3/rs
+	gui=show_Q_path(n,Q_shaping,action_map2,pl,"path with Type3")
 
 ###########Plot1: Where Steps per episodes are shown###############
 
 plt.plot(range(num_episode),res,label='Type0')
 plt.plot(range(num_episode),res1,label='Type1')
-plt.plot(range(num_episode),res3,label='Type3')
 
 if problem=="flag":
 	plt.plot(range(num_episode),res2,label='Type2')
+	plt.plot(range(num_episode),res3,label='Type3')
 	plt.title("Graph of Flags Problem")
 
 if problem=="ht":
@@ -161,10 +159,10 @@ plt.show()
 #########Plot2: Where Cumulative Steps are shown###############
 plt.plot(range(num_episode),np.cumsum(res),label='Type0')
 plt.plot(range(num_episode),np.cumsum(res1),label='Type1')
-plt.plot(range(num_episode),np.cumsum(res3),label='Type3')
 
 if problem=="flag":
 	plt.plot(range(num_episode),np.cumsum(res2),label='Type2')
+	plt.plot(range(num_episode),np.cumsum(res3),label='Type3')
 	plt.title("Graph of Flags Problem")
 
 if problem=="ht":
@@ -173,7 +171,6 @@ if problem=="ht":
 plt.xlabel("Episodes")
 plt.ylabel("Cumulative Steps Taken")
 plt.legend()
-
 if problem=="flag":
 	plt.savefig('results/flags/flags_cumulative_steps'+str(p)+'.png')
 
