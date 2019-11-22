@@ -1,8 +1,8 @@
 Options
 -------
--inp Input Problem
+-inp Input file
 -ne Number of episodes
--nit Number of Iterations
+-rs Number of Random Seeds to average result
 -tp Type of problem ('flag' or 'ht')
 
 File Input Format

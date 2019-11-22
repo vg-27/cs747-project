@@ -1,8 +1,8 @@
 #!/bin/sh
 
 file=
-num_episode=
-num_iter=
+num_episode=300
+num_iter=5
 problem=
 
 while [ "$1" != "" ]; do
@@ -15,7 +15,7 @@ while [ "$1" != "" ]; do
 			shift
 			num_episode=$1
 			;;
-		-nit )
+		-rs )
 			shift
 			num_iter=$1
 			;;

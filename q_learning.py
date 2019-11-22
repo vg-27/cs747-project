@@ -32,24 +32,18 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,shaping,gamm
     for epi in range(num_episodes):
         state = player.initState
         episode_len = 0
-        # if(epi%100 == 0):
         if shaping == 3:
             v = estimate_V(Q,n_states,n_actions)
         while(1):
             episode_len+=1
             action = EpsilonGreedyPolicy(Q,state,epsilon)
-            # action = np.random.choice(np.arange(n_actions),p = action_probs)
             if shaping == 1:
-                # [next_state,reward,finished]=player.transition(state,action)
-                # reward += v[next_state]-v[state]
                 [next_state,reward,finished]=player.transition_with_reward_shaping(state,action,1)
             elif shaping==2:
                 [next_state,reward,finished]=player.transition_with_reward_shaping(state,action,2)
             elif shaping == 3:
-                # v = estimate_V(Q,n_states,n_actions)
                 [next_state,reward,finished]=player.transition(state,action)
                 reward += v[next_state]-v[state]
-
             else:
                 [next_state,reward,finished]=player.transition(state,action)
             next_best_action = np.argmax(Q[next_state])
@@ -58,9 +52,7 @@ def q_learning(player,alpha,epsilon,num_episodes,n_states,n_actions,shaping,gamm
             state = next_state
             epsilon = epsilon/eps_decay
         stepsPerEpisode.append(episode_len)
-        # print("length of episode",episode_len)
-        # print(epi)
-        if(epi<=num_episodes-2):player.reset()
+        if(epi<=num_episodes-1):player.reset()
     return Q,stepsPerEpisode
 
 
