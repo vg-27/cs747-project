@@ -1,9 +1,15 @@
+Run ./script.sh with following options
+
 Options
 -------
 -inp Input file
 -ne Number of episodes
 -rs Number of Random Seeds to average result
 -tp Type of problem ('flag' or 'ht')
+
+Example
+--------
+./script.sh -inp data/flags/inp1.txt -ne 200 -rs 5 -tp flag
 
 File Input Format
 ------------------
